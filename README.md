@@ -41,6 +41,6 @@ docker build -t my-chaos-api:v1 .
 
 # Load image into the Kind cluster
 kind load docker-image my-chaos-api:v1 --name perf-gate-lab
-
+```
 
 ## And yes the code mostly was written by AI(gemini), and "It Works"( took me 1 day to actually do the whole setup and run)
