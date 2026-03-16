@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-api
+  namespace: canary-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-api
+  template:
+    metadata:
+      labels:
+        app: my-api
+    spec:
+      containers:
+      - name: python-app
+        image: my-cahos-api:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        # --- THE FIX STARTS HERE ---
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        resources:
+          limits:
+            memory: "256Mi" # Lower this to see the crash faster!
+            cpu: "500m"

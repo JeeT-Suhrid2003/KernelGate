@@ -1,0 +1,10 @@
+services:
+  app-monitor:
+    build: .
+    ports:
+      - "5000:5000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'        # Limit to half a core
+          memory: 512M      # Limit to 512MB
